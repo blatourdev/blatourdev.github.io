@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cave à vin · gestion de cave personnelle</title>
+  <meta name="description" content="Cave à vin : l’IA lit vos étiquettes, l’app suit l’apogée de chaque bouteille et le sommelier propose un vin de votre cave pour votre plat. Hors ligne, sans compte, sans e-mail.">
+  <meta name="theme-color" content="#0c0e12">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" type="image/png" href="img/cave-icon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="cave">
+  <nav class="topbar">
+    <div class="wrap">
+      <a class="back" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>Toutes mes applications</a>
+      <a class="btn" href="https://cave-a-vin.bruno-b49.workers.dev/" target="_blank" rel="noopener"><span>Ouvrir Cave à vin</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    </div>
+  </nav>
+
+  <header class="wrap app-hero">
+    <div>
+      <div class="app-id"><img src="img/cave-icon.png" alt="" width="56" height="56"><span>Cave à vin · gestion de cave personnelle</span></div>
+      <h1>Votre cave, <em>et un sommelier</em> dans la poche</h1>
+      <p class="lead">Photographiez l’étiquette, l’IA remplit la fiche. L’app vous dit quand ouvrir chaque bouteille, où elle est rangée, et laquelle servir avec ce que vous cuisinez ce soir.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://cave-a-vin.bruno-b49.workers.dev/" target="_blank" rel="noopener">Ouvrir l’app<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <a class="btn btn-ghost" href="#fonctions">Voir ce qu’elle fait</a>
+      </div>
+      <ul class="badges">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pas d’inscription</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Pas d’e-mail</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Fonctionne hors ligne</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Sauvegarde et synchro</li>
+      </ul>
+    </div>
+    <div class="phones">
+      <div class="phone"><img src="img/cave-ajouter.jpg" alt="Ajout d’un vin en photographiant l’étiquette" width="536" height="1160"></div>
+      <div class="phone"><img src="img/cave-accords.jpg" alt="Le sommelier : « Dis-moi ce que tu manges, je te dirai quoi déboucher »" width="536" height="1160"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="block">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">L’intelligence artificielle au service de la cave</p>
+          <h2 class="h">Moins de saisie, plus de dégustation</h2>
+        </div>
+        <div class="promises">
+          <div class="promise">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8a2 2 0 0 1 2-2h2l1.5-2h5L16 6h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="12.5" r="3.5"/></svg></div>
+            <h3>L’IA lit les étiquettes</h3>
+            <p>Une photo suffit : domaine, cuvée, millésime, couleur. Plusieurs bouteilles ? Envoyez un lot de photos d’un coup.</p>
+          </div>
+          <div class="promise">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></div>
+            <h3>L’apogée de chaque vin</h3>
+            <p>L’app vous dit quand ouvrir chaque bouteille : ni trop tôt, ni trop tard.</p>
+          </div>
+          <div class="promise">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3v18M4 3v5a3 3 0 0 0 6 0V3M17 21V3c-2 1-3 3.5-3 6.5 0 2 1 3.5 3 3.5"/></svg></div>
+            <h3>Le sommelier</h3>
+            <p>Dites ce que vous mangez, il choisit dans votre propre cave le vin qui l’accompagnera.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="fonctions">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Dans l’app</p>
+          <h2 class="h">De l’achat jusqu’au verre</h2>
+        </div>
+
+        <div class="feature">
+          <div>
+            <h3>« Dis-moi ce que tu manges, je te dirai quoi déboucher »</h3>
+            <p>Poulet au citron, huîtres, raclette, plateau de fromages… Le sommelier connaît le contenu de votre cave et propose les bouteilles qui iront bien avec votre plat.</p>
+          </div>
+          <div class="feature-media"><div class="phone"><img src="img/cave-accords.jpg" alt="Écran Accords de Cave à vin" loading="lazy" width="536" height="1160"></div></div>
+        </div>
+
+        <div class="feature">
+          <div>
+            <h3>Ajouter une bouteille en une photo</h3>
+            <p>L’IA remplit la fiche, vous n’avez plus qu’à vérifier. La saisie à la main reste possible à tout moment.</p>
+            <ul class="features">
+              <li>Photo de l’étiquette ou lot de photos</li>
+              <li>Nom, producteur, millésime, cuvée, couleur</li>
+              <li>Import depuis un tableur Excel ou PLOC</li>
+            </ul>
+          </div>
+          <div class="feature-media"><div class="phone"><img src="img/cave-ajouter.jpg" alt="Formulaire d’ajout d’un vin" loading="lazy" width="536" height="1160"></div></div>
+        </div>
+
+        <div class="feature">
+          <div>
+            <h3>Le plan de vos casiers</h3>
+            <p>Dessinez vos casiers, armoires ou étagères, puis rangez chaque bouteille à sa place. Une recherche suffit ensuite pour savoir où elle se trouve.</p>
+          </div>
+          <div class="feature-media"><div class="phone"><img src="img/cave-plan.jpg" alt="Plan d’un casier de 90 places" loading="lazy" width="536" height="1160"></div></div>
+        </div>
+
+        <div class="feature">
+          <div>
+            <h3>Le papier, quand on en a besoin</h3>
+            <p>Tout s’imprime pour garder une trace ou étiqueter la cave.</p>
+            <ul class="features">
+              <li>Le livre de cave : la fiche complète de chaque vin, une par page</li>
+              <li>La carte de la cave : où, quand le boire, avec quoi</li>
+              <li>Des étiquettes de col, à scanner pour retrouver la fiche</li>
+              <li>Sauvegarde hors ligne et synchronisation entre téléphones</li>
+            </ul>
+          </div>
+          <div class="feature-media"><div class="phone"><img src="img/cave-reglages.jpg" alt="Réglages : sauvegarde, impression du livre et de la carte de cave" loading="lazy" width="536" height="1160"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="wrap">
+        <img src="img/cave-icon.png" alt="" width="64" height="64">
+        <h2 class="h">À la vôtre !</h2>
+        <p>Ouvrez l’app, ajoutez vos premières bouteilles, puis installez-la sur l’écran d’accueil de votre téléphone.</p>
+        <a class="btn" href="https://cave-a-vin.bruno-b49.workers.dev/" target="_blank" rel="noopener">Ouvrir Cave à vin<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+        <div class="others">
+          <a href="mkts.html"><img src="img/mkts-icon.png" alt="">MKTS</a>
+          <a href="nicole.html"><img src="img/nicole-icon.png" alt="">Bien manger avec Nicole</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© 2026 Bruno Latour</span>
+      <a href="./">Toutes mes applications</a>
+    </div>
+  </footer>
+</body>
+</html>
