@@ -195,3 +195,14 @@ footer a:hover { color: var(--text); }
   .card, .card .preview img { transition: none; }
   .card:hover, .card:hover .preview img { transform: none; }
 }
+
+/* Soutien */
+.btn-coffee { background: #f5d76e; color: #1d1a10; }
+.coffee-box {
+  display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  margin: -24px 0 72px; padding: 24px 28px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.coffee-box h2 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+.coffee-box p { color: var(--text-2); font-size: 15px; margin: 0; }
+.foot-links { display: inline-flex; flex-wrap: wrap; gap: 8px 20px; }
