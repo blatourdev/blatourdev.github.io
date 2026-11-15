@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Les exercices de Victor &amp; Louis</title>
+<link rel="apple-touch-icon" id="touchIcon" href="icon-victor.png">
+<link rel="icon" id="favIcon" type="image/png" href="icon-victor.png">
+<meta name="apple-mobile-web-app-title" id="appTitle" content="Exercices">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -180,6 +183,10 @@ const L=()=>kid==="louis";
 function route(){
   const h=(location.hash||"").replace("#","");
   kid=KIDS[h]?h:null; ex=null;
+  const ic=kid?"icon-"+kid+".png":"icon-victor.png";
+  document.getElementById("touchIcon").href=ic; document.getElementById("favIcon").href=ic;
+  document.getElementById("appTitle").content=kid?"Exos "+KIDS[kid].name:"Exercices";
+  document.title=kid?"Exos "+KIDS[kid].name:"Les exercices de Victor & Louis";
   document.body.classList.toggle("louis",kid==="louis");
   kid?kidHome():home();
 }
