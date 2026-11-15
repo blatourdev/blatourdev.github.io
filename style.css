@@ -206,3 +206,8 @@ footer a:hover { color: var(--text); }
 .coffee-box h2 { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
 .coffee-box p { color: var(--text-2); font-size: 15px; margin: 0; }
 .foot-links { display: inline-flex; flex-wrap: wrap; gap: 8px 20px; }
+.beta-note {
+  margin: 16px 0 0; padding: 14px 18px; font-size: 14px; color: var(--text-2);
+  border: 1px dashed color-mix(in srgb, var(--accent-text) 40%, var(--border)); border-radius: var(--radius);
+}
+.beta-note strong { color: var(--accent-text); font-weight: 600; }
