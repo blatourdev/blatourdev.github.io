@@ -211,3 +211,24 @@ footer a:hover { color: var(--text); }
   border: 1px dashed color-mix(in srgb, var(--accent-text) 40%, var(--border)); border-radius: var(--radius);
 }
 .beta-note strong { color: var(--accent-text); font-weight: 600; }
+
+/* Page contact */
+.contact { max-width: 720px; padding-top: 56px; padding-bottom: 80px; }
+.contact-form { margin-top: 32px; display: grid; gap: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+.contact-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.contact-form label { display: grid; gap: 6px; font-size: 14px; color: var(--text-2); }
+.contact-form input, .contact-form select, .contact-form textarea {
+  font: inherit; font-size: 16px; color: var(--text); background: var(--bg);
+  border: 1px solid var(--border-strong); border-radius: 10px; padding: 10px 12px; width: 100%;
+}
+.contact-form textarea { resize: vertical; min-height: 140px; }
+.contact-form :is(input, select, textarea):focus { outline: none; border-color: var(--text-3); box-shadow: 0 0 0 3px rgba(232,234,237,.08); }
+.contact-form .trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.contact-form .hint { margin: 0; font-size: 13px; color: var(--text-3); }
+.btn-send { justify-self: start; background: var(--text); color: var(--bg); min-width: 140px; }
+.btn-send:disabled { opacity: .6; cursor: wait; }
+.form-status { margin: 0; font-size: 14px; min-height: 1.4em; }
+.form-status.ok { color: #7fd1a0; }
+.form-status.err { color: #f08a8a; }
+.beta-link { color: var(--accent-text); font-weight: 500; white-space: nowrap; }
+@media (max-width: 560px) { .contact-form .row { grid-template-columns: 1fr; } .contact-form { padding: 18px; } }
