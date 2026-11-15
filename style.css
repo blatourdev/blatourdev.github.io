@@ -232,3 +232,10 @@ footer a:hover { color: var(--text); }
 .form-status.err { color: #f08a8a; }
 .beta-link { color: var(--accent-text); font-weight: 500; white-space: nowrap; }
 @media (max-width: 560px) { .contact-form .row { grid-template-columns: 1fr; } .contact-form { padding: 18px; } }
+
+/* Lien contact dans les pages d'app */
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.topbar-link { color: var(--text-2); text-decoration: none; font-size: 14px; }
+.topbar-link:hover { color: var(--text); }
+.closing .ask { margin: 28px auto 0; font-size: 15px; color: var(--text-2); }
+.closing .ask a { color: var(--accent-text); font-weight: 500; }
