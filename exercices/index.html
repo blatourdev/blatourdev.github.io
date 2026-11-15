@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Les exercices de Victor &amp; Louis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F1EA; --ink:#1D2433; --muted:#5B6475; --card:#FFFFFF; --soft:#FAF8F3;
+    --blue:#2457C5; --blue-dark:#173E93; --blue-soft:#E6EDFB; --orange:#F08A24; --orange-dark:#B8641A;
+    --green:#1E8E4E; --green-soft:#E3F4EA; --green-ink:#14603A;
+    --red:#C23B2E; --red-soft:#FBE7E4; --red-ink:#8E2A20; --hint-soft:#FFF4E5; --hint-ink:#8A4A0B; --line:#E3DED3;
+    --font:"Nunito",system-ui,sans-serif;
+    --fs-base:20px; --fs-prompt:26px; --fs-input:28px; --fs-btn:22px; --fs-opt:22px; --fs-h1:34px; --border:3px;
+  }
+  /* ---------- Mode accessible (Louis) ---------- */
+  body.louis{
+    --bg:#FFFFFF; --ink:#000000; --muted:#000000; --card:#FFFFFF; --soft:#FFFFFF;
+    --blue:#0033A0; --blue-dark:#001F66; --blue-soft:#FFFFFF; --orange:#0033A0; --orange-dark:#001F66;
+    --green-soft:#FFFFFF; --green-ink:#000000; --red-soft:#FFFFFF; --red-ink:#000000; --hint-soft:#FFFFFF; --hint-ink:#000000; --line:#000000;
+    --font:Arial,Verdana,sans-serif;
+    --fs-base:30px; --fs-prompt:40px; --fs-input:44px; --fs-btn:34px; --fs-opt:34px; --fs-h1:46px; --border:5px;
+  }
+  body.louis *{font-style:normal!important}
+  body.louis .card{box-shadow:none;border:var(--border) solid #000}
+  body.louis .fb{border:var(--border) solid #000}
+  body.louis :focus-visible{outline:6px solid #FFB000!important;outline-offset:3px}
+
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);-webkit-text-size-adjust:100%;font-size:var(--fs-base)}
+  body{min-height:100vh;display:flex;justify-content:center;padding:20px 16px 40px}
+  .wrap{width:100%;max-width:780px}
+  :focus-visible{outline:4px solid var(--orange);outline-offset:2px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .brand{font-weight:900;font-size:1.1em;letter-spacing:-.3px}
+  .brand span{color:var(--orange)}
+  .stats{display:flex;gap:10px;font-weight:800;font-size:.85em}
+  .pill{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:6px 14px;white-space:nowrap}
+  .bar{height:12px;background:#E6E1D6;border-radius:99px;overflow:hidden;margin-bottom:18px}
+  body.louis .bar{height:20px;background:#fff;border:3px solid #000}
+  .bar i{display:block;height:100%;width:0;background:var(--blue);border-radius:99px;transition:width .4s}
+  .card{background:var(--card);border-radius:22px;padding:28px 26px;box-shadow:0 2px 0 var(--line),0 10px 30px rgba(29,36,51,.06);margin-bottom:16px}
+  .part{display:inline-block;font-weight:800;font-size:.7em;text-transform:uppercase;letter-spacing:.08em;color:var(--blue);background:var(--blue-soft);padding:6px 12px;border-radius:8px;margin-bottom:16px}
+  body.louis .part{font-size:.8em;text-transform:none;letter-spacing:0;border:3px solid var(--blue)}
+  .prompt{font-size:var(--fs-prompt);font-weight:800;line-height:1.35;margin:0 0 22px}
+  .fr{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 4px;line-height:1.05}
+  .fr b{display:block;padding:0 4px}
+  .fr b:first-child{border-bottom:3px solid currentColor}
+  .answer{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:var(--fs-prompt);font-weight:800}
+  input{font:inherit;font-size:var(--fs-input);font-weight:800;text-align:center;color:var(--ink);background:var(--soft);border:var(--border) solid var(--line);border-radius:14px;padding:10px 12px;width:150px;outline:none;-webkit-appearance:none}
+  body.louis input{width:220px}
+  input:focus{border-color:var(--blue);background:#fff}
+  .fbox{display:inline-flex;flex-direction:column;align-items:center;gap:6px}
+  .fbox input{width:120px}
+  .fbox .rule{width:140px;height:4px;background:var(--ink);border-radius:2px}
+  .opts{display:grid;gap:12px;width:100%}
+  .opt{font:inherit;font-size:var(--fs-opt);font-weight:700;text-align:left;background:var(--soft);border:var(--border) solid var(--line);border-radius:14px;padding:16px 18px;cursor:pointer;color:var(--ink);min-height:64px}
+  .opt.sel{border-color:var(--blue);background:var(--blue-soft)}
+  .opt.good{border-color:var(--green);background:var(--green-soft)}
+  .opt.bad{border-color:var(--red);background:var(--red-soft)}
+  .opt .mark{font-weight:900;margin-right:8px}
+  .actions{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+  .btn{font:inherit;font-size:var(--fs-btn);font-weight:900;border:none;border-radius:14px;padding:16px 28px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 var(--blue-dark);min-height:60px}
+  .btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--blue-dark)}
+  .btn.alt{background:#fff;color:var(--blue);border:3px solid var(--blue);box-shadow:none}
+  .btn.go{background:var(--orange);box-shadow:0 4px 0 var(--orange-dark)}
+  .fb{margin-top:20px;border-radius:14px;padding:16px 18px;font-size:1em;font-weight:700;line-height:1.45;display:none}
+  .fb.show{display:block}
+  .fb.ok{background:var(--green-soft);color:var(--green-ink)}
+  .fb.ko{background:var(--red-soft);color:var(--red-ink)}
+  .fb.hint{background:var(--hint-soft);color:var(--hint-ink)}
+  .fb .t{font-weight:900;font-size:1.1em;display:block;margin-bottom:4px}
+  h1{font-size:var(--fs-h1);font-weight:900;margin:0 0 8px;letter-spacing:-.5px;line-height:1.15}
+  .lead{font-size:1em;line-height:1.5;color:var(--muted);margin:0 0 14px}
+  .rules{list-style:none;padding:0;margin:18px 0 6px;display:grid;gap:10px}
+  .rules li{font-size:.95em;background:var(--soft);border-radius:12px;padding:12px 14px;line-height:1.45}
+  body.louis .rules li{border:3px solid #000}
+  .rules li strong{color:var(--blue)}
+  .end{text-align:center}
+  .end .big{font-size:3.2em;font-weight:900;margin:6px 0;color:var(--blue)}
+  .stars{font-size:2.3em;letter-spacing:6px;margin:6px 0 10px}
+  .recap{text-align:left;margin-top:20px;display:grid;gap:8px}
+  .recap div{display:flex;justify-content:space-between;gap:10px;font-size:.9em;background:var(--soft);border-radius:10px;padding:10px 14px}
+  .link{font:inherit;font-size:.8em;font-weight:800;color:var(--blue);background:none;border:none;cursor:pointer;text-decoration:underline;padding:6px 0}
+  .who{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+  .who button{font-family:"Nunito",system-ui,sans-serif;font-size:30px;font-weight:900;padding:34px 16px;border-radius:20px;cursor:pointer;border:3px solid var(--line);background:#fff;color:var(--ink)}
+  .who button span{display:block;font-size:60px;margin-bottom:6px}
+  .who .lo{font-family:Arial,Verdana,sans-serif;font-size:40px;border:5px solid #000;color:#000}
+  .exlist{display:grid;gap:14px}
+  .ex{display:flex;align-items:center;justify-content:space-between;gap:14px;text-align:left;font:inherit;background:var(--card);border:var(--border) solid var(--line);border-radius:18px;padding:20px 22px;cursor:pointer;color:var(--ink);width:100%}
+  .ex.today{border-color:var(--orange)}
+  body.louis .ex.today{border-color:#000;border-width:6px}
+  .ex .tt{font-weight:900;font-size:1.05em;display:block}
+  .ex .dd{font-size:.8em;color:var(--muted);display:block;margin-top:4px}
+  .badge{display:inline-block;font-size:.65em;font-weight:900;color:#fff;background:var(--orange);border-radius:6px;padding:4px 8px;margin-bottom:6px}
+  .ex .go{font-size:1.4em;font-weight:900;color:var(--blue)}
+  .modal{position:fixed;inset:0;background:rgba(29,36,51,.45);display:none;align-items:center;justify-content:center;padding:16px;z-index:10}
+  .modal.show{display:flex}
+  .modal .card{max-width:640px;max-height:90vh;overflow:auto}
+  .modal h2{margin:0 0 10px;font-size:1.3em}
+  .pop{animation:pop .35s ease}
+  @keyframes pop{0%{transform:scale(.97);opacity:.4}100%{transform:scale(1);opacity:1}}
+  .shake{animation:shake .35s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  body.louis .pop, body.louis .shake{animation:none}
+  @media (prefers-reduced-motion:reduce){.pop,.shake{animation:none}.bar i{transition:none}}
+  @media (max-width:520px){:root{--fs-prompt:22px;--fs-btn:19px}.who button{font-size:24px}}
+  .sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header id="hdr"></header>
+  <div class="bar" id="barw" hidden><i id="bar"></i></div>
+  <main id="app" aria-live="polite"></main>
+</div>
+<div class="modal" id="memo" role="dialog" aria-modal="true" aria-labelledby="memoT" onclick="if(event.target===this)closeMemo()">
+  <div class="card"><h2 id="memoT">📘 À retenir</h2><ul class="rules" id="memoL"></ul>
+  <div class="actions"><button class="btn" onclick="closeMemo()">J'ai compris</button></div></div>
+</div>
+
+<script>
+/* =====================================================================
+   EXERCICES — pour ajouter un exercice, ajouter un objet EN TÊTE de la
+   liste de l'enfant (le premier = « Exercice du jour »).
+   ===================================================================== */
+const f=(n,d)=>`<span class="fr" aria-label="${n} sur ${d}"><b aria-hidden="true">${n}</b><b aria-hidden="true">${d}</b></span>`;
+
+const P1="Décimal → fraction", P2="La division s'arrête ?", P3="Fraction · décimal · %", P4="Calcul de pourcentages", P5="Petits problèmes";
+const EXERCISES={
+  victor:[
+    {id:"fractions-1", title:"Fractions, décimaux et pourcentages", date:"Lundi 16 novembre 2026",
+     memo:[
+      "<strong>1.</strong> Un nombre décimal <strong>peut toujours s'écrire</strong> sous forme de fraction : 0,7 = 7/10 ; 2,35 = 235/100.",
+      "<strong>2.</strong> Mais une fraction ne donne <strong>pas toujours</strong> un nombre décimal : 1/4 = 0,25 (la division s'arrête), mais 1/3 = 0,3333… (les 3 ne s'arrêtent jamais).",
+      "<strong>3.</strong> Un pourcentage, c'est une fraction sur 100 : 25 % = 25/100 = 0,25. Pour 25 % de 80 : 80 × 25 ÷ 100 = 20."
+     ],
+     parts:[P1,P2,P3,P4,P5],
+     questions:[
+      {part:P1,type:"frac",prompt:"Écris <u>0,7</u> sous forme de fraction.",val:0.7,hint:"0,7 = 7 dixièmes. Le dénominateur est 10.",expl:"0,7 = "+f(7,10)},
+      {part:P1,type:"frac",prompt:"Écris <u>0,25</u> sous forme de fraction.",val:0.25,hint:"Deux chiffres après la virgule → des centièmes (dénominateur 100).",expl:"0,25 = "+f(25,100)+" = "+f(1,4)},
+      {part:P1,type:"frac",prompt:"Écris <u>1,3</u> sous forme de fraction.",val:1.3,hint:"1,3 = 13 dixièmes.",expl:"1,3 = "+f(13,10)},
+      {part:P1,type:"frac",prompt:"Écris <u>2,45</u> sous forme de fraction.",val:2.45,hint:"2,45 = 245 centièmes.",expl:"2,45 = "+f(245,100)},
+      {part:P1,type:"frac",prompt:"Écris <u>0,08</u> sous forme de fraction.",val:0.08,hint:"Attention au zéro : 0,08 = 8 centièmes.",expl:"0,08 = "+f(8,100)},
+      {part:P1,type:"frac",prompt:"Écris <u>3,5</u> sous forme de fraction.",val:3.5,hint:"3,5 = 35 dixièmes.",expl:"3,5 = "+f(35,10)+" = "+f(7,2)},
+      {part:P2,type:"qcm",prompt:"Que vaut "+f(3,4)+" ?",opts:["0,34","0,75","La division ne s'arrête jamais"],ok:1,hint:"Pose 3 ÷ 4 : 30 ÷ 4 = 7 reste 2, puis 20 ÷ 4 = 5.",expl:"3 ÷ 4 = 0,75. La division s'arrête : c'est un nombre décimal."},
+      {part:P2,type:"qcm",prompt:"Que vaut "+f(1,5)+" ?",opts:["0,15","La division ne s'arrête jamais","0,2"],ok:2,hint:"Pose 1 ÷ 5 : 10 ÷ 5 = 2.",expl:"1 ÷ 5 = 0,2. C'est un nombre décimal."},
+      {part:P2,type:"qcm",prompt:"Que vaut "+f(1,3)+" ?",opts:["0,13","0,3","La division ne s'arrête jamais"],ok:2,hint:"Pose 1 ÷ 3 : 10 ÷ 3 = 3 reste 1… puis encore 10 ÷ 3 = 3 reste 1… Tu vois ?",expl:"1 ÷ 3 = 0,3333… Le reste vaut toujours 1, les 3 ne s'arrêtent jamais : 1/3 n'est <b>pas</b> un nombre décimal."},
+      {part:P2,type:"qcm",prompt:"Que vaut "+f(7,2)+" ?",opts:["3,5","7,2","La division ne s'arrête jamais"],ok:0,hint:"7 ÷ 2 : la moitié de 7.",expl:"7 ÷ 2 = 3,5. C'est un nombre décimal."},
+      {part:P2,type:"qcm",prompt:"Que vaut "+f(2,3)+" ?",opts:["0,23","La division ne s'arrête jamais","0,6"],ok:1,hint:"Pose 2 ÷ 3 : 20 ÷ 3 = 6 reste 2… et ça recommence.",expl:"2 ÷ 3 = 0,6666… Ça ne s'arrête jamais : pas un nombre décimal."},
+      {part:P3,type:"num",prompt:f(1,4)+" = combien de % ?",val:25,unit:"%",hint:"1/4 = 0,25 = 25 centièmes.",expl:f(1,4)+" = 0,25 = 25 %"},
+      {part:P3,type:"frac",prompt:"Écris <u>0,1</u> sous forme de fraction.",val:0.1,hint:"0,1 = 1 dixième.",expl:"0,1 = "+f(1,10)+" = 10 %"},
+      {part:P3,type:"num",prompt:"75 % = quel nombre décimal ?",val:0.75,hint:"75 % = 75/100 = 75 centièmes.",expl:"75 % = "+f(75,100)+" = 0,75 = "+f(3,4)},
+      {part:P3,type:"num",prompt:f(3,10)+" = combien de % ?",val:30,unit:"%",hint:"3/10 = 0,3 = 30/100.",expl:f(3,10)+" = 0,3 = 30 %"},
+      {part:P3,type:"num",prompt:f(1,5)+" = quel nombre décimal ?",val:0.2,hint:"Pose 1 ÷ 5.",expl:f(1,5)+" = 0,2 = 20 %"},
+      {part:P4,type:"num",prompt:"50 % de 30 = ?",val:15,hint:"50 %, c'est la moitié.",expl:"30 × 50 ÷ 100 = 15 (la moitié de 30)"},
+      {part:P4,type:"num",prompt:"10 % de 70 = ?",val:7,hint:"10 %, c'est diviser par 10.",expl:"70 ÷ 10 = 7"},
+      {part:P4,type:"num",prompt:"25 % de 80 = ?",val:20,hint:"25 %, c'est le quart : divise par 4.",expl:"80 ÷ 4 = 20"},
+      {part:P4,type:"num",prompt:"20 % de 15 € = ?",val:3,unit:"€",hint:"10 % de 15, c'est 1,5. Et 20 %, c'est le double.",expl:"15 × 20 ÷ 100 = 3 €"},
+      {part:P4,type:"num",prompt:"75 % de 40 = ?",val:30,hint:"25 % de 40 = 10. Et 75 %, c'est 3 fois plus.",expl:"40 × 75 ÷ 100 = 30"},
+      {part:P5,type:"num",prompt:"Victor gagne 5 € en lavant la voiture. Il dépense 20 % en bonbons. Combien lui <u>reste</u>-t-il ?",val:4,unit:"€",hint:"Calcule d'abord 20 % de 5 €, puis enlève-le de 5 €.",expl:"20 % de 5 € = 1 €. Il reste 5 − 1 = 4 €."},
+      {part:P5,type:"num",prompt:"Dans une classe de 25 élèves, 40 % font du sport le mercredi. Combien d'élèves ?",val:10,unit:"élèves",hint:"25 × 40 ÷ 100.",expl:"25 × 40 ÷ 100 = 10 élèves"},
+      {part:P5,type:"num",prompt:"Louis a lu 3 chapitres sur 4. Quel pourcentage du livre a-t-il lu ?",val:75,unit:"%",hint:"3 sur 4, c'est "+f(3,4)+". Et 3/4 = 0,75.",expl:f(3,4)+" = 0,75 = 75 %"}
+     ]}
+  ],
+  louis:[]
+};
+const KIDS={victor:{name:"Victor",emoji:"🚀"},louis:{name:"Louis",emoji:"⭐"}};
+
+/* ===================== Moteur ===================== */
+const app=document.getElementById("app"), hdr=document.getElementById("hdr"), barw=document.getElementById("barw");
+let kid=null, ex=null, i=-1, score=0, streak=0, best=0, tries=0, done=false, sel=null, perPart={};
+const num=s=>{s=String(s).replace(/\s|€|%|élèves/g,"").replace(",",".");if(s===""||isNaN(s))return null;return parseFloat(s)};
+const eq=(a,b)=>Math.abs(a-b)<1e-9;
+const L=()=>kid==="louis";
+
+function route(){
+  const h=(location.hash||"").replace("#","");
+  kid=KIDS[h]?h:null; ex=null;
+  document.body.classList.toggle("louis",kid==="louis");
+  kid?kidHome():home();
+}
+window.addEventListener("hashchange",route);
+
+function setHeader(withStats){
+  const name=kid?KIDS[kid].name:"";
+  hdr.innerHTML=`<div class="brand">${kid?"Les exercices de <span>"+name+"</span>":"Les <span>exercices</span>"}</div>`+
+    (withStats?`<div class="stats" aria-label="Score"><div class="pill" id="pts">⭐ 0</div><div class="pill" id="streak">🔥 0</div></div>`:"");
+  barw.hidden=!withStats;
+}
+function home(){
+  setHeader(false);
+  app.innerHTML=`<div class="card pop"><h1>Qui fait ses exercices ?</h1>
+    <div class="who"><button onclick="location.hash='victor'"><span aria-hidden="true">🚀</span>Victor</button>
+    <button class="lo" onclick="location.hash='louis'"><span aria-hidden="true">⭐</span>Louis</button></div></div>`;
+}
+function kidHome(){
+  setHeader(false);
+  const list=EXERCISES[kid];
+  let body;
+  if(!list.length){
+    body=`<div class="card pop"><h1>Bonjour ${KIDS[kid].name} ! 👋</h1>
+      <p class="lead">Ton espace est prêt.</p><p class="lead">Papa va bientôt ajouter ton premier exercice ici.</p></div>`;
+  } else {
+    body=`<div class="card pop"><h1>Salut ${KIDS[kid].name} ! 👋</h1><p class="lead">Choisis ton exercice.</p>
+      <div class="exlist">${list.map((e,k)=>`<button class="ex ${k===0?"today":""}" onclick="startEx(${k})">
+        <span>${k===0?`<span class="badge">Exercice du jour</span>`:""}<span class="tt">${e.title}</span><span class="dd">${e.date} · ${e.questions.length} questions</span></span>
+        <span class="go" aria-hidden="true">→</span></button>`).join("")}</div></div>`;
+  }
+  app.innerHTML=body+`<p style="text-align:center"><button class="link" onclick="location.hash=''">Changer d'élève</button></p>`;
+}
+function startEx(k){
+  ex=EXERCISES[kid][k]; i=-1; score=0; streak=0; best=0; perPart={};
+  document.getElementById("memoL").innerHTML=ex.memo.map(m=>`<li>${m}</li>`).join("");
+  setHeader(true); hud();
+  app.innerHTML=`<div class="card pop"><div class="part">${ex.date}</div><h1>${ex.title}</h1>
+    <p class="lead">${ex.questions.length} questions. Bonne réponse du premier coup : <b>⭐⭐</b>. Au deuxième essai : <b>⭐</b>. Enchaîne les bonnes réponses pour faire monter ta série 🔥.</p>
+    <p class="lead">Tu peux poser tes calculs sur un brouillon. Avant de commencer, relis l'essentiel :</p>
+    <ul class="rules">${ex.memo.map(m=>`<li>${m}</li>`).join("")}</ul>
+    <div class="actions"><button class="btn go" onclick="next()">C'est parti ! 🚀</button></div></div>
+    <p style="text-align:center"><button class="link" onclick="kidHome()">← Mes exercices</button></p>`;
+}
+function hud(){
+  if(!ex) return;
+  document.getElementById("pts").textContent="⭐ "+score;
+  document.getElementById("streak").textContent="🔥 "+streak;
+  document.getElementById("bar").style.width=(Math.max(0,i)/ex.questions.length*100)+"%";
+}
+function next(){
+  const Q=ex.questions;
+  i++; tries=0; done=false; sel=null; hud();
+  if(i>=Q.length) return finish();
+  const q=Q[i]; let ans="";
+  if(q.type==="frac") ans=`<div class="fbox"><input id="n" inputmode="numeric" aria-label="numérateur, le nombre du haut" autocomplete="off"><div class="rule" aria-hidden="true"></div><input id="d" inputmode="numeric" aria-label="dénominateur, le nombre du bas" autocomplete="off"></div>`;
+  else if(q.type==="num") ans=`<input id="v" inputmode="decimal" aria-label="ta réponse" autocomplete="off">${q.unit?`<span>${q.unit}</span>`:""}`;
+  else ans=`<div class="opts" role="group" aria-label="Choisis une réponse">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="false" onclick="pick(${k})"><span class="mark"></span>${o}</button>`).join("")}</div>`;
+  app.innerHTML=`<div class="card pop" id="card">
+    <div class="part">${q.part} · ${i+1}/${Q.length}</div>
+    <p class="prompt">${q.prompt}</p>
+    <div class="answer">${ans}</div>
+    <div class="fb" id="fb" role="status"></div>
+    <div class="actions"><button class="btn" id="ok" onclick="check()">Valider</button></div></div>
+    <p style="text-align:center"><button class="link" onclick="openMemo()">📘 Revoir « À retenir »</button> &nbsp; <button class="link" onclick="kidHome()">Quitter</button></p>`;
+  const first=document.querySelector("#card input"); if(first) setTimeout(()=>first.focus(),50);
+  document.querySelectorAll("#card input").forEach(el=>el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();done?next():check()}}));
+}
+function pick(k){ if(done) return; sel=k; document.querySelectorAll(".opt").forEach(b=>{const on=+b.dataset.k===k;b.classList.toggle("sel",on);b.setAttribute("aria-pressed",on)}); }
+function check(){
+  if(done) return next();
+  const q=ex.questions[i]; let good=false, empty=false;
+  if(q.type==="frac"){const n=num(document.getElementById("n").value), d=num(document.getElementById("d").value);
+    if(n===null||d===null) empty=true; else good=d!==0&&eq(n/d,q.val);}
+  else if(q.type==="num"){const v=num(document.getElementById("v").value); if(v===null) empty=true; else good=eq(v,q.val);}
+  else { if(sel===null) empty=true; else good=sel===q.ok; }
+  const fb=document.getElementById("fb");
+  if(empty){fb.className="fb show hint";fb.innerHTML="<span class='t'>✏️ Il manque ta réponse</span>";return;}
+  tries++;
+  if(good){
+    const g=tries===1?2:1; score+=g; streak++; best=Math.max(best,streak);
+    perPart[q.part]=(perPart[q.part]||0)+g;
+    const cheers=["Bravo !","Excellent !","Parfait !","Trop fort !","Bien joué !","Yes !"];
+    fb.className="fb show ok";fb.innerHTML=`<span class='t'>✔ ${cheers[Math.floor(Math.random()*cheers.length)]} ${g===2?"⭐⭐":"⭐"}</span>${q.expl}`;
+    finishQ();
+  } else if(tries===1){
+    streak=0;
+    fb.className="fb show hint";fb.innerHTML=`<span class='t'>✘ Pas tout à fait… Un indice :</span>${q.hint}`;
+    const c=document.getElementById("card"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake");
+    if(q.type==="qcm"){const b=document.querySelector(`.opt[data-k="${sel}"]`);b.classList.add("bad");b.querySelector(".mark").textContent="✘";sel=null;document.querySelectorAll(".opt").forEach(x=>{x.classList.remove("sel");x.setAttribute("aria-pressed","false")});}
+  } else {
+    streak=0;
+    fb.className="fb show ko";fb.innerHTML=`<span class='t'>✘ La bonne réponse :</span>${q.expl}`;
+    finishQ();
+  }
+  hud();
+}
+function finishQ(){
+  done=true; const q=ex.questions[i];
+  document.querySelectorAll("#card input").forEach(el=>el.disabled=true);
+  if(q.type==="qcm") document.querySelectorAll(".opt").forEach(b=>{if(+b.dataset.k===q.ok){b.classList.add("good");b.querySelector(".mark").textContent="✔"}b.disabled=true});
+  const ok=document.getElementById("ok"); ok.textContent=i===ex.questions.length-1?"Voir mon score 🏁":"Suivant →"; ok.classList.add("go"); ok.focus();
+}
+function finish(){
+  const Q=ex.questions, max=Q.length*2, pct=Math.round(score/max*100);
+  const stars=pct>=90?"⭐⭐⭐":pct>=70?"⭐⭐☆":pct>=45?"⭐☆☆":"☆☆☆";
+  const msg=pct>=90?"Champion ! 🏆":pct>=70?"Très bon travail, tu maîtrises bien !":pct>=45?"Pas mal ! Relis « À retenir » et réessaie.":"Courage ! Relis « À retenir », puis recommence : ça va rentrer.";
+  const parts=(ex.parts||[]).map(p=>{const n=Q.filter(q=>q.part===p).length*2;return `<div><span>${p}</span><b>${perPart[p]||0} / ${n} ⭐</b></div>`}).join("");
+  app.innerHTML=`<div class="card end pop">
+    <div class="part">Exercice terminé</div>
+    <div class="stars" aria-hidden="true">${stars}</div>
+    <div class="big">${score} / ${max}</div>
+    <p style="font-weight:800;margin:0 0 4px">${msg}</p>
+    <p class="lead" style="margin:0">Meilleure série : 🔥 ${best}</p>
+    <div class="recap">${parts}</div>
+    <p class="lead" style="margin-top:18px">Montre cet écran à papa 📸</p>
+    <div class="actions" style="justify-content:center"><button class="btn alt" onclick="startEx(EXERCISES[kid].indexOf(ex))">Recommencer</button><button class="btn" onclick="kidHome()">Mes exercices</button></div></div>`;
+  document.getElementById("bar").style.width="100%";
+}
+function openMemo(){document.getElementById("memo").classList.add("show")}
+function closeMemo(){document.getElementById("memo").classList.remove("show")}
+route();
+</script>
+</body>
+</html>
