@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Les exercices de Victor &amp; Louis</title>
 <link rel="apple-touch-icon" id="touchIcon" href="icon-victor.png">
 <link rel="icon" id="favIcon" type="image/png" href="icon-victor.png">
@@ -366,6 +369,23 @@ function finish(){
 function openMemo(){document.getElementById("memo").classList.add("show")}
 function closeMemo(){document.getElementById("memo").classList.remove("show")}
 route();
+
+/* Mise à jour automatique (raccourci écran d'accueil iPad) :
+   changer VERSION à chaque modification de la page. */
+const VERSION="2026-11-16b";
+function checkUpdate(){
+  if(ex) return; // ne pas interrompre un exercice en cours
+  fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
+    const m=t.match(/const VERSION="([^"]+)"/); if(!m||m[1]===VERSION) return;
+    let tried=null; try{tried=sessionStorage.getItem("upd")}catch(e){}
+    if(tried===m[1]) return;
+    try{sessionStorage.setItem("upd",m[1])}catch(e){}
+    location.replace(location.pathname+"?v="+encodeURIComponent(m[1])+location.hash);
+  }).catch(()=>{});
+}
+checkUpdate();
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")checkUpdate()});
+window.addEventListener("pageshow",e=>{if(e.persisted)checkUpdate()});
 </script>
 </body>
 </html>
