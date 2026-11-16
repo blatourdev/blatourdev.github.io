@@ -183,6 +183,25 @@ const EXERCISES={
      ]}
   ],
   louis:[
+    {id:"mult-2chiffres-1", title:"Multiplications à 2 chiffres", date:"Lundi 16 novembre 2026",
+     memo:[
+      "<strong>1.</strong> Ligne 1 : je multiplie par le chiffre des <strong>unités</strong>.",
+      "<strong>2.</strong> Ligne 2 : je multiplie par le chiffre des <strong>dizaines</strong>. Je commence par écrire un <strong>0</strong> aux unités, car je multiplie des dizaines.",
+      "<strong>3.</strong> J'<strong>additionne</strong> les deux lignes pour avoir le résultat.",
+      "<strong>Retenues :</strong> une rangée de cases pour chaque ligne. Celle du bas sert à la ligne 1, celle du haut à la ligne 2."
+     ],
+     parts:["Multiplications"],
+     questions:[
+      {part:"Multiplications",type:"mult",a:347,b:26,
+       hint:"Ligne 1 : 347 × 6. Commence par 7 × 6 = 42 : j'écris 2, je retiens 4.<br>Ligne 2 : 347 × 2, après le 0.<br>Puis additionne les deux lignes.",
+       expl:"Ligne 1 : 347 × 6 = 2 082<br>Ligne 2 : 347 × 2 = 694, avec le 0 : 6 940<br>2 082 + 6 940 = 9 022<br><b>347 × 26 = 9 022</b>"},
+      {part:"Multiplications",type:"mult",a:2586,b:34,
+       hint:"Ligne 1 : 2 586 × 4. Commence par 6 × 4 = 24 : j'écris 4, je retiens 2.<br>Ligne 2 : 2 586 × 3, après le 0.<br>Puis additionne les deux lignes.",
+       expl:"Ligne 1 : 2 586 × 4 = 10 344<br>Ligne 2 : 2 586 × 3 = 7 758, avec le 0 : 77 580<br>10 344 + 77 580 = 87 924<br><b>2 586 × 34 = 87 924</b>"},
+      {part:"Multiplications",type:"mult",a:13478,b:57,
+       hint:"Ligne 1 : 13 478 × 7. Commence par 8 × 7 = 56 : j'écris 6, je retiens 5.<br>Ligne 2 : 13 478 × 5, après le 0.<br>Puis additionne les deux lignes.",
+       expl:"Ligne 1 : 13 478 × 7 = 94 346<br>Ligne 2 : 13 478 × 5 = 67 390, avec le 0 : 673 900<br>94 346 + 673 900 = 768 246<br><b>13 478 × 57 = 768 246</b>"}
+     ]},
     {id:"mult-retenue-1", title:"Multiplications avec retenue", date:"Lundi 16 novembre 2026",
      memo:[
       "<strong>1.</strong> On commence <strong>toujours par les unités</strong>, tout à droite.",
@@ -207,20 +226,35 @@ const EXERCISES={
 /* Multiplication posée : retenues (facultatives) + résultat chiffre par chiffre */
 const COLS=["unités","dizaines","centaines","unités de mille","dizaines de mille","centaines de mille","unités de millions"];
 const sp=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g," ");
+function multRows(q){ // lignes à remplir : partiels (si multiplicateur à 2 chiffres ou +) puis résultat
+  const B=String(q.b), rows=[];
+  if(B.length>1) for(let i=0;i<B.length;i++) rows.push({r:String(i),shift:i,val:String(q.a*+B[B.length-1-i]),name:"ligne "+(i+1)});
+  rows.push({r:"f",shift:0,val:String(q.a*q.b),name:"résultat"});
+  return rows;
+}
+function multExp(q,el){const row=multRows(q).find(x=>x.r===el.dataset.r), k=+el.dataset.p-row.shift; return row.val[row.val.length-1-k];}
 function multGrid(q){
-  const A=String(q.a), R=String(q.a*q.b), n=Math.max(R.length,A.length);
+  const A=String(q.a), B=String(q.b), rows=multRows(q);
+  const n=Math.max(A.length,B.length,...rows.map(x=>x.val.length+x.shift));
   const cell=(c,cls="")=>`<div class="c ${cls}">${c}</div>`;
-  let car="", ra="", rb="", rr="";
-  for(let j=0;j<n;j++){
-    const p=n-1-j; // rang depuis la droite (0 = unités)
-    const da=p<A.length?A[A.length-1-p]:"";
-    car+=(p>=1&&p<A.length)?cell(`<input class="cy" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="retenue au-dessus des ${COLS[p]}, facultatif">`,"car"):cell("","car");
-    ra+=cell(`<span aria-hidden="true">${da}</span>`);
-    rb+=cell(p===0?`<span aria-hidden="true">${q.b}</span>`:"");
-    rr+=cell(p<R.length?`<input class="res" data-p="${p}" inputmode="numeric" maxlength="1" autocomplete="off" aria-label="résultat, chiffre des ${COLS[p]}">`:"");
-  }
-  return `<div class="mwrap"><div class="mult" style="grid-template-columns:repeat(${n+1},auto)">
-    ${cell("","car")}${car}${cell("")}${ra}${cell('<span aria-hidden="true">×</span>')}${rb}<div class="line" aria-hidden="true"></div>${cell("")}${rr}</div></div>`;
+  const line=()=>`<div class="line" aria-hidden="true"></div>`;
+  const row=(op,fn,cls="")=>{let h=cell(op?`<span aria-hidden="true">${op}</span>`:"",cls);for(let j=0;j<n;j++)h+=fn(n-1-j);return h;};
+  const inp=(cls,lab,extra="")=>`<input class="${cls}" ${extra} inputmode="numeric" maxlength="1" autocomplete="off" aria-label="${lab}">`;
+  let h="";
+  for(let c=B.length-1;c>=0;c--) h+=row("",p=>(p>=1&&p<A.length)?cell(inp("cy",`retenue${B.length>1?" de la ligne "+(c+1):""} au-dessus des ${COLS[p]}, facultatif`),"car"):cell("","car"),"car");
+  h+=row("",p=>cell(p<A.length?`<span aria-hidden="true">${A[A.length-1-p]}</span>`:""));
+  h+=row("×",p=>cell(p<B.length?`<span aria-hidden="true">${B[B.length-1-p]}</span>`:""));
+  h+=line();
+  rows.forEach((x,k)=>{
+    if(x.r==="f"&&rows.length>1) h+=line();
+    const op=(x.r!=="f"&&k===rows.length-2)?"+":"";
+    h+=row(op,p=>{
+      if(p<x.shift) return cell(`<span aria-label="zéro déjà écrit">0</span>`);
+      if(p<x.shift+x.val.length) return cell(inp("res",`${x.name}, chiffre des ${COLS[p]}`,`data-r="${x.r}" data-p="${p}"`));
+      return cell("");
+    });
+  });
+  return `<div class="mwrap"><div class="mult" style="grid-template-columns:repeat(${n+1},auto)">${h}</div></div>`;
 }
 const KIDS={victor:{name:"Victor",emoji:"🚀"},louis:{name:"Louis",emoji:"⭐"}};
 
@@ -294,7 +328,7 @@ function next(){
   const q=Q[i]; let ans="";
   if(q.type==="frac") ans=`<div class="fbox"><input id="n" inputmode="numeric" aria-label="numérateur, le nombre du haut" autocomplete="off"><div class="rule" aria-hidden="true"></div><input id="d" inputmode="numeric" aria-label="dénominateur, le nombre du bas" autocomplete="off"></div>`;
   else if(q.type==="num") ans=`<input id="v" inputmode="decimal" aria-label="ta réponse" autocomplete="off">${q.unit?`<span>${q.unit}</span>`:""}`;
-  else if(q.type==="mult"){ q.prompt=`Calcule : ${sp(q.a)} × ${q.b}<br>Commence par la droite.`; ans=multGrid(q); }
+  else if(q.type==="mult"){ q.prompt=`Calcule : ${sp(q.a)} × ${q.b}<br>Commence par la droite.`+(String(q.b).length>1?"<br>Puis additionne les lignes.":""); ans=multGrid(q); }
   else ans=`<div class="opts" role="group" aria-label="Choisis une réponse">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="false" onclick="pick(${k})"><span class="mark"></span>${o}</button>`).join("")}</div>`;
   app.innerHTML=`<div class="card pop" id="card">
     <div class="part">${q.part} · ${i+1}/${Q.length}</div>
@@ -303,10 +337,11 @@ function next(){
     <div class="fb" id="fb" role="status"></div>
     <div class="actions"><button class="btn" id="ok" onclick="check()">Valider</button></div></div>
     <p style="text-align:center"><button class="link" onclick="openMemo()">📘 Revoir « À retenir »</button> &nbsp; <button class="link" onclick="kidHome()">Quitter</button></p>`;
-  const first=q.type==="mult"?document.querySelector('#card .res[data-p="0"]'):document.querySelector("#card input"); if(first) setTimeout(()=>first.focus(),50);
+  const ord=q.type==="mult"?[...document.querySelectorAll("#card .res")].sort((x,y)=>((x.dataset.r==="f"?99:+x.dataset.r)-(y.dataset.r==="f"?99:+y.dataset.r))||(x.dataset.p-y.dataset.p)):[];
+  const first=q.type==="mult"?ord[0]:document.querySelector("#card input"); if(first) setTimeout(()=>first.focus(),50);
   if(q.type==="mult") document.querySelectorAll("#card .mult input").forEach(el=>el.addEventListener("input",()=>{
     el.value=el.value.replace(/\D/g,"").slice(-1); el.classList.remove("bad");
-    if(el.value&&el.classList.contains("res")){const nx=document.querySelector(`#card .res[data-p="${+el.dataset.p+1}"]`); if(nx) nx.focus();}
+    if(el.value&&el.classList.contains("res")){const nx=ord[ord.indexOf(el)+1]; if(nx) nx.focus();}
   }));
   document.querySelectorAll("#card input").forEach(el=>el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();done?next():check()}}));
 }
@@ -319,8 +354,8 @@ function check(){
   else if(q.type==="num"){const v=num(document.getElementById("v").value); if(v===null) empty=true; else good=eq(v,q.val);}
   else if(q.type==="mult"){const R=String(q.a*q.b), cells=[...document.querySelectorAll("#card .res")];
     if(cells.some(c=>c.value==="")) empty=true;
-    else { good=cells.every(c=>c.value===R[R.length-1-c.dataset.p]);
-      cells.forEach(c=>{const bad=c.value!==R[R.length-1-c.dataset.p]; c.classList.toggle("bad",bad); c.setAttribute("aria-invalid",bad)}); } }
+    else { good=cells.every(c=>c.value===multExp(q,c));
+      cells.forEach(c=>{const bad=c.value!==multExp(q,c); c.classList.toggle("bad",bad); c.setAttribute("aria-invalid",bad)}); } }
   else { if(sel===null) empty=true; else good=sel===q.ok; }
   const fb=document.getElementById("fb");
   if(empty){fb.className="fb show hint";fb.innerHTML="<span class='t'>✏️ Il manque ta réponse</span>";return;}
@@ -339,7 +374,7 @@ function check(){
   } else {
     streak=0;
     fb.className="fb show ko";fb.innerHTML=`<span class='t'>✘ La bonne réponse :</span>${q.expl}`;
-    if(q.type==="mult"){const R=String(q.a*q.b);document.querySelectorAll("#card .res").forEach(c=>{c.value=R[R.length-1-c.dataset.p];c.classList.remove("bad")});}
+    if(q.type==="mult"){document.querySelectorAll("#card .res").forEach(c=>{c.value=multExp(q,c);c.classList.remove("bad")});}
     finishQ();
   }
   hud();
@@ -372,7 +407,7 @@ route();
 
 /* Mise à jour automatique (raccourci écran d'accueil iPad) :
    changer VERSION à chaque modification de la page. */
-const VERSION="2026-11-16b";
+const VERSION="2026-11-16c";
 function checkUpdate(){
   if(ex) return; // ne pas interrompre un exercice en cours
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
