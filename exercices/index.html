@@ -146,8 +146,66 @@
 const f=(n,d)=>`<span class="fr" aria-label="${n} sur ${d}"><b aria-hidden="true">${n}</b><b aria-hidden="true">${d}</b></span>`;
 
 const P1="Décimal → fraction", P2="La division s'arrête ?", P3="Fraction · décimal · %", P4="Calcul de pourcentages", P5="Petits problèmes";
+const C1="Les irréguliers", C2="Le radical change", C3="Les verbes en -dre";
 const EXERCISES={
   victor:[
+    {id:"present-3e-groupe-1", title:"Le présent du 3e groupe", date:"Mercredi 18 novembre 2026",
+     memo:[
+      "<strong>Terminaisons les plus fréquentes :</strong> -s, -s, -t, -ons, -ez, -ent (je dis, il dit, nous disons, ils disent).",
+      "<strong>Verbes en -dre</strong> (attendre, répondre) : ils gardent le d et n'ont pas de t à il : il attend, il répond.",
+      "<strong>Irréguliers :</strong> aller (je vais, tu vas, il va, nous allons, vous allez, ils vont), faire (vous faites, ils font), dire (vous dites).",
+      "<strong>Le radical peut changer :</strong> prendre → nous prenons, ils prennent ; venir → je viens, ils viennent."
+     ],
+     parts:[C1,C2,C3],
+     questions:[
+      {part:C1,type:"txt",prompt:"<b>aller</b> — nous …",ans:["allons","nous allons"],hint:"Pour aller, seuls nous et vous sont « réguliers ».",expl:"nous <b>allons</b>"},
+      {part:C1,type:"txt",prompt:"<b>aller</b> — ils …",ans:["vont","ils vont"],hint:"Ça ne ressemble pas du tout à « aller » !",expl:"ils <b>vont</b>"},
+      {part:C1,type:"txt",prompt:"<b>faire</b> — vous …",ans:["faites","vous faites"],hint:"Comme « vous dites ».",expl:"vous <b>faites</b> (et pas « faisez » !)"},
+      {part:C1,type:"txt",prompt:"<b>faire</b> — ils …",ans:["font","ils font"],hint:"Ça rime avec « ils vont ».",expl:"ils <b>font</b>"},
+      {part:C1,type:"txt",prompt:"<b>dire</b> — vous …",ans:["dites","vous dites"],hint:"Comme « vous faites ».",expl:"vous <b>dites</b> (et pas « disez » !)"},
+      {part:C2,type:"txt",prompt:"<b>prendre</b> — nous …",ans:["prenons","nous prenons"],hint:"Le d disparaît avec nous.",expl:"nous <b>prenons</b>"},
+      {part:C2,type:"txt",prompt:"<b>prendre</b> — ils …",ans:["prennent","ils prennent"],hint:"Deux n !",expl:"ils <b>prennent</b>"},
+      {part:C2,type:"txt",prompt:"<b>venir</b> — je …",ans:["viens","je viens"],hint:"Le radical devient vien-.",expl:"je <b>viens</b>"},
+      {part:C2,type:"txt",prompt:"<b>venir</b> — ils …",ans:["viennent","ils viennent"],hint:"Deux n, comme « ils prennent ».",expl:"ils <b>viennent</b>"},
+      {part:C2,type:"txt",prompt:"<b>voir</b> — nous …",ans:["voyons","nous voyons"],hint:"Le i devient y avec nous et vous.",expl:"nous <b>voyons</b>"},
+      {part:C2,type:"txt",prompt:"<b>voir</b> — ils …",ans:["voient","ils voient"],hint:"Ici le i revient : voi-…",expl:"ils <b>voient</b>"},
+      {part:C3,type:"txt",prompt:"<b>attendre</b> — il …",ans:["attend","il attend"],hint:"Le d reste, pas de t à la fin.",expl:"il <b>attend</b>"},
+      {part:C3,type:"txt",prompt:"<b>attendre</b> — tu …",ans:["attends","tu attends"],hint:"Avec tu, toujours un s.",expl:"tu <b>attends</b>"},
+      {part:C3,type:"txt",prompt:"<b>répondre</b> — il …",ans:["répond","il répond"],hint:"Comme « il attend ».",expl:"il <b>répond</b>"},
+      {part:C3,type:"txt",prompt:"<b>répondre</b> — vous …",ans:["répondez","vous répondez"],hint:"Avec vous : -ez.",expl:"vous <b>répondez</b>"}
+     ]},
+    {id:"fractions-2", title:"Fractions et pourcentages (2)", date:"Mercredi 18 novembre 2026",
+     memo:[
+      "<strong>1.</strong> Un nombre décimal <strong>peut toujours s'écrire</strong> sous forme de fraction : 0,9 = 9/10 ; 0,45 = 45/100.",
+      "<strong>2.</strong> Une fraction ne donne <strong>pas toujours</strong> un nombre décimal : 3/4 = 0,75 (la division s'arrête), mais 1/6 = 0,1666… (les 6 ne s'arrêtent jamais).",
+      "<strong>3.</strong> Un pourcentage est une fraction sur 100 : 40 % = 40/100 = 0,4. Pour 40 % de 50 : 50 × 40 ÷ 100 = 20."
+     ],
+     parts:[P1,P2,P3,P4,P5],
+     questions:[
+      {part:P1,type:"frac",prompt:"Écris <u>0,9</u> sous forme de fraction.",val:0.9,hint:"9 dixièmes.",expl:"0,9 = "+f(9,10)},
+      {part:P1,type:"frac",prompt:"Écris <u>0,45</u> sous forme de fraction.",val:0.45,hint:"Deux chiffres après la virgule → des centièmes.",expl:"0,45 = "+f(45,100)},
+      {part:P1,type:"frac",prompt:"Écris <u>1,7</u> sous forme de fraction.",val:1.7,hint:"1,7 = 17 dixièmes.",expl:"1,7 = "+f(17,10)},
+      {part:P1,type:"frac",prompt:"Écris <u>0,06</u> sous forme de fraction.",val:0.06,hint:"Attention au zéro : 6 centièmes.",expl:"0,06 = "+f(6,100)},
+      {part:P1,type:"frac",prompt:"Écris <u>3,25</u> sous forme de fraction.",val:3.25,hint:"3,25 = 325 centièmes.",expl:"3,25 = "+f(325,100)+" = "+f(13,4)},
+      {part:P2,type:"qcm",prompt:"Que vaut "+f(5,4)+" ?",opts:["5,4","1,25","La division ne s'arrête jamais"],ok:1,hint:"Pose 5 ÷ 4 : 5 ÷ 4 = 1 reste 1, puis 10 ÷ 4…",expl:"5 ÷ 4 = 1,25 : nombre décimal."},
+      {part:P2,type:"qcm",prompt:"Que vaut "+f(1,6)+" ?",opts:["0,16","0,6","La division ne s'arrête jamais"],ok:2,hint:"Pose 1 ÷ 6 : 10 ÷ 6 = 1 reste 4, 40 ÷ 6 = 6 reste 4… et ça recommence.",expl:"1 ÷ 6 = 0,1666… : pas un nombre décimal."},
+      {part:P2,type:"qcm",prompt:"Que vaut "+f(3,5)+" ?",opts:["0,6","0,35","La division ne s'arrête jamais"],ok:0,hint:"Pose 3 ÷ 5 : 30 ÷ 5 = 6.",expl:"3 ÷ 5 = 0,6 : nombre décimal."},
+      {part:P2,type:"qcm",prompt:"Que vaut "+f(4,9)+" ?",opts:["0,49","La division ne s'arrête jamais","0,4"],ok:1,hint:"Pose 4 ÷ 9 : 40 ÷ 9 = 4 reste 4… et ça recommence.",expl:"4 ÷ 9 = 0,444… : pas un nombre décimal."},
+      {part:P3,type:"num",prompt:f(1,2)+" = combien de % ?",val:50,unit:"%",hint:"1/2 = 0,5 = 50 centièmes.",expl:f(1,2)+" = 0,5 = 50 %"},
+      {part:P3,type:"num",prompt:"0,4 = combien de % ?",val:40,unit:"%",hint:"0,4 = 0,40 = 40 centièmes.",expl:"0,4 = "+f(40,100)+" = 40 %"},
+      {part:P3,type:"num",prompt:"15 % = quel nombre décimal ?",val:0.15,hint:"15 % = 15 centièmes.",expl:"15 % = "+f(15,100)+" = 0,15"},
+      {part:P3,type:"num",prompt:f(3,5)+" = combien de % ?",val:60,unit:"%",hint:"3/5 = 0,6.",expl:f(3,5)+" = 0,6 = 60 %"},
+      {part:P3,type:"num",prompt:"5 % = quel nombre décimal ?",val:0.05,hint:"5 centièmes : attention au zéro.",expl:"5 % = "+f(5,100)+" = 0,05"},
+      {part:P4,type:"num",prompt:"10 % de 90 = ?",val:9,hint:"10 %, c'est diviser par 10.",expl:"90 ÷ 10 = 9"},
+      {part:P4,type:"num",prompt:"50 % de 46 = ?",val:23,hint:"50 %, c'est la moitié.",expl:"46 ÷ 2 = 23"},
+      {part:P4,type:"num",prompt:"25 % de 60 = ?",val:15,hint:"25 %, c'est le quart.",expl:"60 ÷ 4 = 15"},
+      {part:P4,type:"num",prompt:"20 % de 35 = ?",val:7,hint:"10 % de 35 = 3,5. Et 20 %, le double.",expl:"35 × 20 ÷ 100 = 7"},
+      {part:P4,type:"num",prompt:"30 % de 50 = ?",val:15,hint:"10 % de 50 = 5. Et 30 %, 3 fois plus.",expl:"50 × 30 ÷ 100 = 15"},
+      {part:P4,type:"num",prompt:"75 % de 12 = ?",val:9,hint:"25 % de 12 = 3. Et 75 %, 3 fois plus.",expl:"12 × 75 ÷ 100 = 9"},
+      {part:P5,type:"num",prompt:"Un jeu coûte 40 €. Il est soldé à −25 %. Combien coûte-t-il maintenant ?",val:30,unit:"€",hint:"Calcule 25 % de 40 €, puis enlève-le.",expl:"25 % de 40 € = 10 €. 40 − 10 = 30 €."},
+      {part:P5,type:"num",prompt:"Sur 20 questions, Victor a 15 bonnes réponses. Quel pourcentage ?",val:75,unit:"%",hint:"15 sur 20 = "+f(15,20)+". Multiplie en haut et en bas par 5.",expl:f(15,20)+" = "+f(75,100)+" = 75 %"},
+      {part:P5,type:"num",prompt:"Une pizza a 8 parts. Louis en mange 2. Quel pourcentage de la pizza ?",val:25,unit:"%",hint:"2 sur 8 = "+f(2,8)+" = "+f(1,4)+".",expl:f(2,8)+" = "+f(1,4)+" = 0,25 = 25 %"}
+     ]},
     {id:"fractions-1", title:"Fractions, décimaux et pourcentages", date:"Lundi 16 novembre 2026",
      memo:[
       "<strong>1.</strong> Un nombre décimal <strong>peut toujours s'écrire</strong> sous forme de fraction : 0,7 = 7/10 ; 2,35 = 235/100.",
@@ -290,6 +348,7 @@ const KIDS={victor:{name:"Victor",emoji:"🚀"},louis:{name:"Louis",emoji:"⭐"}
 const app=document.getElementById("app"), hdr=document.getElementById("hdr"), barw=document.getElementById("barw");
 let kid=null, ex=null, i=-1, score=0, streak=0, best=0, tries=0, done=false, sel=null, perPart={};
 const num=s=>{s=String(s).replace(/\s|€|%|élèves/g,"").replace(",",".");if(s===""||isNaN(s))return null;return parseFloat(s)};
+const norm=s=>String(s).toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g," ").trim();
 const eq=(a,b)=>Math.abs(a-b)<1e-9;
 const L=()=>kid==="louis";
 
@@ -355,6 +414,7 @@ function next(){
   if(i>=Q.length) return finish();
   const q=Q[i]; let ans="";
   if(q.type==="frac") ans=`<div class="fbox"><input id="n" inputmode="numeric" aria-label="numérateur, le nombre du haut" autocomplete="off"><div class="rule" aria-hidden="true"></div><input id="d" inputmode="numeric" aria-label="dénominateur, le nombre du bas" autocomplete="off"></div>`;
+  else if(q.type==="txt") ans=`<input id="v" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="ta réponse" autocomplete="off" style="width:min(100%,360px)">`;
   else if(q.type==="num") ans=`<input id="v" inputmode="decimal" aria-label="ta réponse" autocomplete="off">${q.unit?`<span>${q.unit}</span>`:""}`;
   else if(q.type==="mult"){ q.prompt=`Calcule : ${sp(q.a)} × ${q.b}<br>Commence par la droite.`+(String(q.b).length>1?"<br>Puis additionne les lignes.":""); ans=multGrid(q); }
   else ans=`<div class="opts" role="group" aria-label="Choisis une réponse">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}" aria-pressed="false" onclick="pick(${k})"><span class="mark"></span>${o}</button>`).join("")}</div>`;
@@ -379,6 +439,7 @@ function check(){
   const q=ex.questions[i]; let good=false, empty=false;
   if(q.type==="frac"){const n=num(document.getElementById("n").value), d=num(document.getElementById("d").value);
     if(n===null||d===null) empty=true; else good=d!==0&&eq(n/d,q.val);}
+  else if(q.type==="txt"){const v=norm(document.getElementById("v").value); if(v==="") empty=true; else good=q.ans.some(a=>norm(a)===v);}
   else if(q.type==="num"){const v=num(document.getElementById("v").value); if(v===null) empty=true; else good=eq(v,q.val);}
   else if(q.type==="mult"){const R=String(q.a*q.b), cells=[...document.querySelectorAll("#card .res")];
     if(cells.some(c=>c.value==="")) empty=true;
@@ -435,7 +496,7 @@ route();
 
 /* Mise à jour automatique (raccourci écran d'accueil iPad) :
    changer VERSION à chaque modification de la page. */
-const VERSION="2026-11-18a";
+const VERSION="2026-11-18b";
 function checkUpdate(){
   if(ex) return; // ne pas interrompre un exercice en cours
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
