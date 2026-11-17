@@ -183,6 +183,34 @@ const EXERCISES={
      ]}
   ],
   louis:[
+    {id:"etre-avoir-1", title:"Être ou avoir ?", date:"Mercredi 18 novembre 2026",
+     memo:[
+      "<strong>Être :</strong> je suis, tu es, il est, nous sommes, vous êtes, ils sont.",
+      "<strong>Avoir :</strong> j'ai, tu as, il a, nous avons, vous avez, ils ont.",
+      "<strong>Astuce :</strong> regarde d'abord le petit mot devant (je, tu, il, nous, vous, ils)."
+     ],
+     parts:["Être ou avoir"],
+     questions:[
+      {part:"Être ou avoir",type:"qcm",prompt:"Je <span aria-label='trou'>……</span> content.",opts:["suis","ai","es"],ok:0,hint:"Être, avec je : je …",expl:"Je <b>suis</b> content. (verbe être)"},
+      {part:"Être ou avoir",type:"qcm",prompt:"Tu <span aria-label='trou'>……</span> un chat noir.",opts:["es","as","a"],ok:1,hint:"Avoir, avec tu : tu …",expl:"Tu <b>as</b> un chat noir. (verbe avoir)"},
+      {part:"Être ou avoir",type:"qcm",prompt:"Il <span aria-label='trou'>……</span> dans sa chambre.",opts:["a","es","est"],ok:2,hint:"Être, avec il : il …",expl:"Il <b>est</b> dans sa chambre. (verbe être)"},
+      {part:"Être ou avoir",type:"qcm",prompt:"Nous <span aria-label='trou'>……</span> faim.",opts:["avons","sommes","ont"],ok:0,hint:"Avoir, avec nous : nous …",expl:"Nous <b>avons</b> faim. (verbe avoir)"},
+      {part:"Être ou avoir",type:"qcm",prompt:"Ils <span aria-label='trou'>……</span> en vacances.",opts:["ont","sont","est"],ok:1,hint:"Être, avec ils : ils …",expl:"Ils <b>sont</b> en vacances. (verbe être)"}
+     ]},
+    {id:"a-ou-a-1", title:"a ou à ?", date:"Mercredi 18 novembre 2026",
+     memo:[
+      "<strong>a</strong> (sans accent) : c'est le verbe avoir. Je peux le remplacer par <strong>avait</strong>.",
+      "<strong>à</strong> (avec accent) : je ne peux pas le remplacer par avait.",
+      "<strong>Exemple :</strong> Louis a un vélo → Louis avait un vélo : ça marche, donc <strong>a</strong>."
+     ],
+     parts:["a ou à"],
+     questions:[
+      {part:"a ou à",type:"qcm",prompt:"Louis <span aria-label='trou'>……</span> un ballon.",opts:["a","à"],ok:0,hint:"Essaie : « Louis avait un ballon ». Ça marche ?",expl:"Louis avait un ballon : ça marche. Donc <b>a</b>."},
+      {part:"a ou à",type:"qcm",prompt:"Je vais <span aria-label='trou'>……</span> l'école.",opts:["a","à"],ok:1,hint:"Essaie : « Je vais avait l'école ». Ça marche ?",expl:"« Je vais avait l'école » : ça ne marche pas. Donc <b>à</b>."},
+      {part:"a ou à",type:"qcm",prompt:"Maman <span aria-label='trou'>……</span> froid.",opts:["a","à"],ok:0,hint:"Essaie : « Maman avait froid ». Ça marche ?",expl:"Maman avait froid : ça marche. Donc <b>a</b>."},
+      {part:"a ou à",type:"qcm",prompt:"Il joue <span aria-label='trou'>……</span> la balle.",opts:["a","à"],ok:1,hint:"Essaie : « Il joue avait la balle ». Ça marche ?",expl:"« Il joue avait la balle » : ça ne marche pas. Donc <b>à</b>."},
+      {part:"a ou à",type:"qcm",prompt:"Victor <span aria-label='trou'>……</span> fini ses devoirs.",opts:["a","à"],ok:0,hint:"Essaie : « Victor avait fini ses devoirs ». Ça marche ?",expl:"Victor avait fini ses devoirs : ça marche. Donc <b>a</b>."}
+     ]},
     {id:"mult-2chiffres-1", title:"Multiplications à 2 chiffres", date:"Lundi 16 novembre 2026",
      memo:[
       "<strong>1.</strong> Ligne 1 : je multiplie par le chiffre des <strong>unités</strong>.",
@@ -407,7 +435,7 @@ route();
 
 /* Mise à jour automatique (raccourci écran d'accueil iPad) :
    changer VERSION à chaque modification de la page. */
-const VERSION="2026-11-16c";
+const VERSION="2026-11-18a";
 function checkUpdate(){
   if(ex) return; // ne pas interrompre un exercice en cours
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
