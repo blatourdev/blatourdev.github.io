@@ -367,6 +367,37 @@ const KIDS={victor:{name:"Victor",emoji:"🚀"},louis:{name:"Louis",emoji:"🚄"
 /* ===================== Moteur ===================== */
 const app=document.getElementById("app"), hdr=document.getElementById("hdr"), barw=document.getElementById("barw");
 let kid=null, ex=null, i=-1, score=0, streak=0, best=0, tries=0, done=false, sel=null, perPart={};
+/* Compte rendu pour papa : envoyé au Worker Cloudflare « exercices » (base D1) en fin de partie */
+const RESULTS_URL="https://exercices.bruno-b49.workers.dev/score";
+let t0=0, hints=0, given=0, errs=[], sent=false;
+const plain=h=>{const d=document.createElement("div");d.innerHTML=String(h).replace(/<br\s*\/?>/gi," ");return d.textContent.replace(/\s+/g," ").trim().slice(0,200)};
+function given_answer(q){
+  const v=id=>{const e=document.getElementById(id);return e?e.value.trim():""};
+  if(q.type==="frac") return v("n")+"/"+v("d");
+  if(q.type==="enc") return v("lo")+" < "+q.n+" < "+v("hi");
+  if(q.type==="txt"||q.type==="num") return v("v");
+  if(q.type==="mult") return [...document.querySelectorAll("#card .res[data-r='f']")].map(c=>c.value).join("")||"(grille)";
+  return sel!==null&&q.opts?plain(q.opts[sel]):"";
+}
+function store(k,f){try{const a=JSON.parse(localStorage.getItem(k)||"[]");const r=f(a);localStorage.setItem(k,JSON.stringify(r));}catch(e){}}
+function post(d){return fetch(RESULTS_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(d),keepalive:true}).then(r=>{if(!r.ok)throw 0;})}
+function flushQueue(){
+  let q=[];try{q=JSON.parse(localStorage.getItem("exo_queue")||"[]")}catch(e){}
+  if(!q.length) return;
+  try{localStorage.setItem("exo_queue","[]")}catch(e){}
+  q.forEach(d=>post(d).catch(()=>store("exo_queue",a=>a.concat([d]).slice(-50))));
+}
+function sendResult(finished){
+  if(sent||!ex||i<0) return; sent=true;
+  const d={enfant:kid, exercice_id:ex.id, exercice_titre:ex.title, score, total:ex.questions.length*2,
+    indices:hints, reponses_donnees:given, duree_s:Math.round((Date.now()-t0)/1000), erreurs:errs, termine:finished,
+    questions_faites:finished?ex.questions.length:i, joue_le:new Date().toISOString()};
+  store("exo_history",a=>a.concat([d]).slice(-200));
+  const st=document.getElementById("sendst");
+  post(d).then(()=>{if(st)st.textContent="✔ Ton score est envoyé à papa."})
+    .catch(()=>{store("exo_queue",a=>a.concat([d]).slice(-50)); if(st)st.textContent="Score gardé sur l'iPad : il sera envoyé à papa plus tard.";});
+}
+function quitEx(){ if(ex&&i>=0&&i<ex.questions.length) sendResult(false); kidHome(); }
 const num=s=>{s=String(s).replace(/\s|€|%|élèves/g,"").replace(",",".");if(s===""||isNaN(s))return null;return parseFloat(s)};
 const norm=s=>String(s).toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g," ").trim();
 const eq=(a,b)=>Math.abs(a-b)<1e-9;
@@ -412,7 +443,7 @@ function kidHome(){
   app.innerHTML=body+`<p style="text-align:center"><button class="link" onclick="location.hash=''">Changer d'élève</button></p>`;
 }
 function startEx(k){
-  ex=EXERCISES[kid][k]; i=-1; score=0; streak=0; best=0; perPart={};
+  ex=EXERCISES[kid][k]; i=-1; score=0; streak=0; best=0; perPart={}; t0=0; hints=0; given=0; errs=[]; sent=false;
   document.getElementById("memoL").innerHTML=ex.memo.map(m=>`<li>${m}</li>`).join("");
   setHeader(true); hud();
   app.innerHTML=`<div class="card pop"><div class="part">${ex.date}</div><h1>${ex.title}</h1>
@@ -430,7 +461,7 @@ function hud(){
 }
 function next(){
   const Q=ex.questions;
-  i++; tries=0; done=false; sel=null; hud();
+  i++; tries=0; done=false; sel=null; hud(); if(i===0) t0=Date.now();
   if(i>=Q.length) return finish();
   const q=Q[i]; let ans="";
   if(q.type==="frac") ans=`<div class="fbox"><input id="n" inputmode="numeric" aria-label="numérateur, le nombre du haut" autocomplete="off"><div class="rule" aria-hidden="true"></div><input id="d" inputmode="numeric" aria-label="dénominateur, le nombre du bas" autocomplete="off"></div>`;
@@ -445,7 +476,7 @@ function next(){
     <div class="answer">${ans}</div>
     <div class="fb" id="fb" role="status"></div>
     <div class="actions"><button class="btn" id="ok" onclick="check()">Valider</button></div></div>
-    <p style="text-align:center"><button class="link" onclick="openMemo()">📘 Revoir « À retenir »</button> &nbsp; <button class="link" onclick="kidHome()">Quitter</button></p>`;
+    <p style="text-align:center"><button class="link" onclick="openMemo()">📘 Revoir « À retenir »</button> &nbsp; <button class="link" onclick="quitEx()">Quitter</button></p>`;
   const ord=q.type==="mult"?[...document.querySelectorAll("#card .res")].sort((x,y)=>((x.dataset.r==="f"?99:+x.dataset.r)-(y.dataset.r==="f"?99:+y.dataset.r))||(x.dataset.p-y.dataset.p)):[];
   const first=q.type==="mult"?ord[0]:document.querySelector("#card input"); if(first) setTimeout(()=>first.focus(),50);
   if(q.type==="mult") document.querySelectorAll("#card .mult input").forEach(el=>el.addEventListener("input",()=>{
@@ -473,6 +504,7 @@ function check(){
   const fb=document.getElementById("fb");
   if(empty){fb.className="fb show hint";fb.innerHTML="<span class='t'>✏️ Il manque ta réponse</span>";return;}
   tries++;
+  if(!good) errs.push({n:i+1, partie:q.part, question:plain(q.prompt), essai:tries, reponse:given_answer(q)});
   if(good){
     const g=tries===1?2:1; score+=g; streak++; best=Math.max(best,streak);
     perPart[q.part]=(perPart[q.part]||0)+g;
@@ -480,12 +512,12 @@ function check(){
     fb.className="fb show ok";fb.innerHTML=`<span class='t'>✔ ${cheers[Math.floor(Math.random()*cheers.length)]} ${g===2?"⭐⭐":"⭐"}</span>${q.expl}`;
     finishQ();
   } else if(tries===1){
-    streak=0;
+    streak=0; hints++;
     fb.className="fb show hint";fb.innerHTML=`<span class='t'>✘ Pas tout à fait… Un indice :</span>${q.type==="mult"?"Les cases en pointillés sont fausses.<br>":""}${q.hint}`;
     const c=document.getElementById("card"); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake");
     if(q.type==="qcm"){const b=document.querySelector(`.opt[data-k="${sel}"]`);b.classList.add("bad");b.querySelector(".mark").textContent="✘";sel=null;document.querySelectorAll(".opt").forEach(x=>{x.classList.remove("sel");x.setAttribute("aria-pressed","false")});}
   } else {
-    streak=0;
+    streak=0; given++;
     fb.className="fb show ko";fb.innerHTML=`<span class='t'>✘ La bonne réponse :</span>${q.expl}`;
     if(q.type==="mult"){document.querySelectorAll("#card .res").forEach(c=>{c.value=multExp(q,c);c.classList.remove("bad")});}
     finishQ();
@@ -510,17 +542,20 @@ function finish(){
     <p style="font-weight:800;margin:0 0 4px">${msg}</p>
     <p class="lead" style="margin:0">Meilleure série : 🔥 ${best}</p>
     <div class="recap">${parts}</div>
-    <p class="lead" style="margin-top:18px">Montre cet écran à papa 📸</p>
+    <p class="lead" style="margin-top:18px" id="sendst" role="status">Envoi du score à papa…</p>
     <div class="actions" style="justify-content:center"><button class="btn alt" onclick="startEx(EXERCISES[kid].indexOf(ex))">Recommencer</button><button class="btn" onclick="kidHome()">Mes exercices</button></div></div>`;
   document.getElementById("bar").style.width="100%";
+  sendResult(true);
 }
 function openMemo(){document.getElementById("memo").classList.add("show")}
 function closeMemo(){document.getElementById("memo").classList.remove("show")}
 route();
+flushQueue();
+window.addEventListener("online",flushQueue);
 
 /* Mise à jour automatique (raccourci écran d'accueil iPad) :
    changer VERSION à chaque modification de la page. */
-const VERSION="2026-11-18c";
+const VERSION="2026-11-18d";
 function checkUpdate(){
   if(ex) return; // ne pas interrompre un exercice en cours
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
