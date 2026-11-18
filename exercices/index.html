@@ -8,7 +8,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Les exercices de Victor &amp; Louis</title>
-<link rel="apple-touch-icon" id="touchIcon" href="icon-victor.png">
+<link rel="apple-touch-icon" id="touchIcon" href="icon-victor.png?v=2">
 <link rel="icon" id="favIcon" type="image/png" href="icon-victor.png">
 <meta name="apple-mobile-web-app-title" id="appTitle" content="Exercices">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,6 +62,10 @@
   .fbox{display:inline-flex;flex-direction:column;align-items:center;gap:6px}
   .fbox input{width:120px}
   .fbox .rule{width:140px;height:4px;background:var(--ink);border-radius:2px}
+  .enc{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:1.4em;font-weight:800}
+  .enc input{width:150px;text-align:center}
+  .enc input.bad{border-style:dashed;border-color:var(--red)}
+  body.louis .enc{gap:18px}
   .opts{display:grid;gap:12px;width:100%}
   .opt{font:inherit;font-size:var(--fs-opt);font-weight:700;text-align:left;background:var(--soft);border:var(--border) solid var(--line);border-radius:14px;padding:16px 18px;cursor:pointer;color:var(--ink);min-height:64px}
   .opt.sel{border-color:var(--blue);background:var(--blue-soft)}
@@ -241,6 +245,22 @@ const EXERCISES={
      ]}
   ],
   louis:[
+    {id:"encadrer-1", title:"Encadrer un nombre", date:"Mercredi 18 novembre 2026",
+     memo:[
+      "<strong>Entre 2 dizaines :</strong> je regarde la dizaine avant et la dizaine après.",
+      "<strong>Exemple :</strong> 630 &lt; 635 &lt; 640.",
+      "<strong>Entre 2 centaines :</strong> je regarde la centaine avant et la centaine après.",
+      "<strong>Exemple :</strong> 600 &lt; 635 &lt; 700."
+     ],
+     parts:["Entre 2 dizaines","Entre 2 centaines"],
+     questions:[
+      {part:"Entre 2 dizaines",type:"enc",n:247,step:10,prompt:"Encadre 247<br>entre 2 dizaines.",hint:"La dizaine avant 247 finit par 0 : 240.<br>La dizaine après : 250.",expl:"<b>240 &lt; 247 &lt; 250</b>"},
+      {part:"Entre 2 dizaines",type:"enc",n:583,step:10,prompt:"Encadre 583<br>entre 2 dizaines.",hint:"La dizaine avant 583 : 580.<br>La dizaine après : 590.",expl:"<b>580 &lt; 583 &lt; 590</b>"},
+      {part:"Entre 2 dizaines",type:"enc",n:718,step:10,prompt:"Encadre 718<br>entre 2 dizaines.",hint:"La dizaine avant 718 : 710.<br>La dizaine après : 720.",expl:"<b>710 &lt; 718 &lt; 720</b>"},
+      {part:"Entre 2 centaines",type:"enc",n:462,step:100,prompt:"Encadre 462<br>entre 2 centaines.",hint:"Une centaine finit par 00.<br>Avant 462 : 400. Après : 500.",expl:"<b>400 &lt; 462 &lt; 500</b>"},
+      {part:"Entre 2 centaines",type:"enc",n:815,step:100,prompt:"Encadre 815<br>entre 2 centaines.",hint:"Avant 815 : 800.<br>Après : 900.",expl:"<b>800 &lt; 815 &lt; 900</b>"},
+      {part:"Entre 2 centaines",type:"enc",n:139,step:100,prompt:"Encadre 139<br>entre 2 centaines.",hint:"Avant 139 : 100.<br>Après : 200.",expl:"<b>100 &lt; 139 &lt; 200</b>"}
+     ]},
     {id:"etre-avoir-1", title:"Être ou avoir ?", date:"Mercredi 18 novembre 2026",
      memo:[
       "<strong>Être :</strong> je suis, tu es, il est, nous sommes, vous êtes, ils sont.",
@@ -342,7 +362,7 @@ function multGrid(q){
   });
   return `<div class="mwrap"><div class="mult" style="grid-template-columns:repeat(${n+1},auto)">${h}</div></div>`;
 }
-const KIDS={victor:{name:"Victor",emoji:"🚀"},louis:{name:"Louis",emoji:"⭐"}};
+const KIDS={victor:{name:"Victor",emoji:"🚀"},louis:{name:"Louis",emoji:"🚄"}};
 
 /* ===================== Moteur ===================== */
 const app=document.getElementById("app"), hdr=document.getElementById("hdr"), barw=document.getElementById("barw");
@@ -355,7 +375,7 @@ const L=()=>kid==="louis";
 function route(){
   const h=(location.hash||"").replace("#","");
   kid=KIDS[h]?h:null; ex=null;
-  const ic=kid?"icon-"+kid+".png":"icon-victor.png";
+  const ic=(kid?"icon-"+kid+".png":"icon-victor.png")+"?v=2";
   document.getElementById("touchIcon").href=ic; document.getElementById("favIcon").href=ic;
   document.getElementById("appTitle").content=kid?"Exos "+KIDS[kid].name:"Exercices";
   document.title=kid?"Exos "+KIDS[kid].name:"Les exercices de Victor & Louis";
@@ -374,7 +394,7 @@ function home(){
   setHeader(false);
   app.innerHTML=`<div class="card pop"><h1>Qui fait ses exercices ?</h1>
     <div class="who"><button onclick="location.hash='victor'"><span aria-hidden="true">🚀</span>Victor</button>
-    <button class="lo" onclick="location.hash='louis'"><span aria-hidden="true">⭐</span>Louis</button></div></div>`;
+    <button class="lo" onclick="location.hash='louis'"><span aria-hidden="true">🚄</span>Louis</button></div></div>`;
 }
 function kidHome(){
   setHeader(false);
@@ -414,6 +434,7 @@ function next(){
   if(i>=Q.length) return finish();
   const q=Q[i]; let ans="";
   if(q.type==="frac") ans=`<div class="fbox"><input id="n" inputmode="numeric" aria-label="numérateur, le nombre du haut" autocomplete="off"><div class="rule" aria-hidden="true"></div><input id="d" inputmode="numeric" aria-label="dénominateur, le nombre du bas" autocomplete="off"></div>`;
+  else if(q.type==="enc") ans=`<div class="enc"><input id="lo" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="le nombre avant, plus petit que ${q.n}"><span aria-hidden="true">&lt;</span><b>${q.n}</b><span aria-hidden="true">&lt;</span><input id="hi" inputmode="numeric" maxlength="4" autocomplete="off" aria-label="le nombre après, plus grand que ${q.n}"></div>`;
   else if(q.type==="txt") ans=`<input id="v" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="ta réponse" autocomplete="off" style="width:min(100%,360px)">`;
   else if(q.type==="num") ans=`<input id="v" inputmode="decimal" aria-label="ta réponse" autocomplete="off">${q.unit?`<span>${q.unit}</span>`:""}`;
   else if(q.type==="mult"){ q.prompt=`Calcule : ${sp(q.a)} × ${q.b}<br>Commence par la droite.`+(String(q.b).length>1?"<br>Puis additionne les lignes.":""); ans=multGrid(q); }
@@ -439,6 +460,9 @@ function check(){
   const q=ex.questions[i]; let good=false, empty=false;
   if(q.type==="frac"){const n=num(document.getElementById("n").value), d=num(document.getElementById("d").value);
     if(n===null||d===null) empty=true; else good=d!==0&&eq(n/d,q.val);}
+  else if(q.type==="enc"){const a=num(document.getElementById("lo").value), b=num(document.getElementById("hi").value);
+    if(a===null||b===null) empty=true; else { const st=q.step, lo=Math.floor(q.n/st)*st; good=a===lo&&b===lo+st;
+      document.getElementById("lo").classList.toggle("bad",a!==lo); document.getElementById("hi").classList.toggle("bad",b!==lo+st);} }
   else if(q.type==="txt"){const v=norm(document.getElementById("v").value); if(v==="") empty=true; else good=q.ans.some(a=>norm(a)===v);}
   else if(q.type==="num"){const v=num(document.getElementById("v").value); if(v===null) empty=true; else good=eq(v,q.val);}
   else if(q.type==="mult"){const R=String(q.a*q.b), cells=[...document.querySelectorAll("#card .res")];
@@ -496,7 +520,7 @@ route();
 
 /* Mise à jour automatique (raccourci écran d'accueil iPad) :
    changer VERSION à chaque modification de la page. */
-const VERSION="2026-11-18b";
+const VERSION="2026-11-18c";
 function checkUpdate(){
   if(ex) return; // ne pas interrompre un exercice en cours
   fetch(location.pathname+"?nocache="+Date.now(),{cache:"no-store"}).then(r=>r.text()).then(t=>{
